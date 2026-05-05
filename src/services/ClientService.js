@@ -13,3 +13,7 @@ export const deleteClient=(id)=>{
     console.log(`${baseURL}/${id}`)
     return axios.delete(`${baseURL}/${id}`)
 }
+
+export const updateClient=(client)=>{
+    return axios.put(`${baseURL}/${client.id}`,client)
+}

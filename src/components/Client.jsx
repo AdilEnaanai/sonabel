@@ -3,7 +3,7 @@ import { useState } from 'react'
 import ListeClients from './ListeClients'
 import FormClient from './FormClient'
 import '../styles/Client.css'
-import { addClient, getClients, deleteClient } from '../services/ClientService'
+import { addClient, getClients, deleteClient, updateClient } from '../services/ClientService'
 function Client() {
     const [vue,setVue]=useState('liste')
     const [clients, setClients] = useState([])
@@ -40,9 +40,11 @@ function Client() {
     }
 
     const onUpdate=(updatingClient)=>{
-        setClients((prevClients) => prevClients.map(client => client.id === updatingClient.id ? updatingClient : client));
-        setVue('liste')
-        setSelectedClient(null)
+        updateClient(updatingClient).then((response) => {
+            setClients((prevClients) => prevClients.map(client => client.id === updatingClient.id ? response.data : client));
+            setVue('liste')
+            setSelectedClient(null)
+        });
     }
 
     const onEdit=(client)=>{
