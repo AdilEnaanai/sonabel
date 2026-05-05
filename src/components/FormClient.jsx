@@ -1,12 +1,12 @@
 import React from 'react'
 import '../styles/FormClient.css'
-function FormClient({onCancel,onAdd}) {
+function FormClient({onCancel,onAdd,onUpdate,client}) {
 const [formData, setFormData] = React.useState({
-    nom: '',
-    compteur: '',
-    ville: '',
-    consommation: 0,
-    reseau: 'Alimenté'
+    nom: client ? client.nom : '',
+    compteur: client ? client.compteur : '',
+    ville: client ? client.ville : '',
+    consommation: client ? client.consommation : 0,
+    reseau: client ? client.reseau : 'Alimenté'
 })
 
 function addNewClient(e){
@@ -22,9 +22,22 @@ function addNewClient(e){
     onAdd(newClient);
 }
 
+function updateClient(e){
+    e.preventDefault()
+    const updatedClient = {
+        id: client.id,
+        nom: formData.nom,
+        compteur: formData.compteur,
+        ville: formData.ville,
+        consommation: formData.consommation,
+        reseau: formData.reseau
+    };
+    onUpdate(updatedClient);
+}
+
   return (
     <>
-    <form onSubmit={addNewClient} className='form'>
+    <form onSubmit={client ? updateClient : addNewClient} className='form'>
 
             <input type="text" name="nom" value={formData.nom} onChange={(e) => setFormData({...formData, nom: e.target.value})} placeholder='Nom' />
             <input type="text" name="compteur" value={formData.compteur} onChange={(e) => setFormData({...formData, compteur: e.target.value})} placeholder='Compteur' />
@@ -36,7 +49,7 @@ function addNewClient(e){
             </select>
             <div className='btn-box'>
                 <button type="reset" className='reset-btn' onClick={onCancel}>Annuler</button>
-                 <button type="submit" className='submit-btn'>Ajouter</button>
+                 <button type="submit" className='submit-btn'>{client ? 'Modifier' : 'Ajouter'}</button>
             </div>
     </form>
     </>

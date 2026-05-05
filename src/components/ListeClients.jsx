@@ -3,11 +3,15 @@ import Modal from 'react-modal'
 import { useState } from 'react'
 import '../styles/ListeClients.css'
 
-function ListeClients({ onDelete, clients }) {
+function ListeClients({ onDelete, onEdit, clients }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleDeleteClient = (id) => {
         onDelete(id);
+    }
+
+    const handleEditClient = (client) => {
+        onEdit(client);
     }
   return (
     <>
@@ -35,6 +39,7 @@ function ListeClients({ onDelete, clients }) {
                         <td style={{ color: client.reseau === 'Alimenté' ? '#006633' : '#cc0000' }}>{client.reseau}</td>
                         <td>
                             <img className='deleteBTN' src="https://cdn1.iconfinder.com/data/icons/softwaredemo/PNG/256x256/DeleteRed.png" alt="Supprimer" onClick={() => setIsOpen(true)} />
+                            <img className='editBTN' src="https://icons.veryicon.com/png/o/miscellaneous/blue-soft-fillet-icon/edit-173.png" alt="Modifier" onClick={() => handleEditClient(client)} />
                         </td>
                     {/* Modal de confirmation de suppression} */}
                     <Modal className="modal-content" isOpen={isOpen} onRequestClose={() => setIsOpen(false)} contentLabel="Confirmation de suppression">
