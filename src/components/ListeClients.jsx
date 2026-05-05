@@ -1,10 +1,18 @@
 import React from 'react'
+import Modal from 'react-modal'
+import { useState } from 'react'
 import '../styles/ListeClients.css'
-function ListeClients({ clients }) {
+
+function ListeClients({ onDelete, clients }) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleDeleteClient = (id) => {
+        onDelete(id);
+    }
   return (
     <>
         <h2>Liste des clients</h2>
-        <table border={1}>
+        <table className='liste-clients' border={1}>
             <thead>
                 <tr>
                     <th>Id</th>
@@ -26,13 +34,21 @@ function ListeClients({ clients }) {
                         <td>{client.consommation} kWh</td>
                         <td style={{ color: client.reseau === 'Alimenté' ? '#006633' : '#cc0000' }}>{client.reseau}</td>
                         <td>
-                            <img className='deleteBTN' src="https://cdn1.iconfinder.com/data/icons/softwaredemo/PNG/256x256/DeleteRed.png" alt="Supprimer" onClick={() => handleDeleteClient(client.id)} />
+                            <img className='deleteBTN' src="https://cdn1.iconfinder.com/data/icons/softwaredemo/PNG/256x256/DeleteRed.png" alt="Supprimer" onClick={() => setIsOpen(true)} />
                         </td>
+                    {/* Modal de confirmation de suppression} */}
+                    <Modal className="modal-content" isOpen={isOpen} onRequestClose={() => setIsOpen(false)} contentLabel="Confirmation de suppression">
+                            <h2>Êtes-vous sûr de vouloir supprimer ce client ?</h2>
+                            <button className='oui' onClick={() => { handleDeleteClient(client.id); setIsOpen(false); }}>Oui</button>
+                            <button className='non' onClick={() => setIsOpen(false)}>Non</button>
+                        </Modal> 
                     </tr>
+                    
                 ))}
                 </tbody>
         </table>
-        
+
+ 
     </>
   )
 }

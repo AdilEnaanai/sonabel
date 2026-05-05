@@ -3,3 +3,81 @@
     height: 30px;
     cursor: pointer;
 }
+
+.liste-clients{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+}
+
+.liste-clients th, .liste-clients td{
+    padding: 10px;
+    text-align: left;
+}
+
+.liste-clients th{
+    background-color: #f2f2f2;
+}
+
+
+
+.modal-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.modal-content h2{
+    margin-top: 0;
+}
+
+.modal-content button{
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+
+.oui{
+    background-color: #007bff;
+    color: white;
+}
+
+.oui:hover{
+    background-color: #0056b3;
+}
+
+.non{
+    background-color: #6c757d;
+    color: white;
+}
+
+.non:hover{
+    background-color: #5a6268;
+}
+
+.modal-content button:first-child{
+    background-color: #007bff;
+    color: white;
+}
+.modal-content button:first-child:hover{
+    background-color: #0056b3;
+}
+.modal-content button:last-child{
+    background-color: #6c757d;
+    color: white;
+}
+
+.modal-content button:last-child:hover{
+    background-color: #5a6268;
+}
+
