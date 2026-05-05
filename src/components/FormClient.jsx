@@ -12,7 +12,6 @@ const [formData, setFormData] = React.useState({
 function addNewClient(e){
     e.preventDefault()
     const newClient = {
-        id: 'BF' + Math.floor(Math.random() * 1000).toString().padStart(3, '0'),
         nom: formData.nom,
         compteur: formData.compteur,
         ville: formData.ville,

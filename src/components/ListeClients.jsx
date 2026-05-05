@@ -5,7 +5,7 @@ import '../styles/ListeClients.css'
 
 function ListeClients({ onDelete, onEdit, clients }) {
     const [isOpen, setIsOpen] = useState(false);
-
+    const [selectedClient, setSelectedClient] = useState(null);
     const handleDeleteClient = (id) => {
         onDelete(id);
     }
@@ -38,21 +38,21 @@ function ListeClients({ onDelete, onEdit, clients }) {
                         <td>{client.consommation} kWh</td>
                         <td style={{ color: client.reseau === 'Alimenté' ? '#006633' : '#cc0000' }}>{client.reseau}</td>
                         <td>
-                            <img className='deleteBTN' src="https://cdn1.iconfinder.com/data/icons/softwaredemo/PNG/256x256/DeleteRed.png" alt="Supprimer" onClick={() => setIsOpen(true)} />
+                            <img className='deleteBTN' src="https://cdn1.iconfinder.com/data/icons/softwaredemo/PNG/256x256/DeleteRed.png" alt="Supprimer" onClick={() => {setIsOpen(true);setSelectedClient(client.id)}} />
                             <img className='editBTN' src="https://icons.veryicon.com/png/o/miscellaneous/blue-soft-fillet-icon/edit-173.png" alt="Modifier" onClick={() => handleEditClient(client)} />
                         </td>
-                    {/* Modal de confirmation de suppression} */}
-                    <Modal className="modal-content" isOpen={isOpen} onRequestClose={() => setIsOpen(false)} contentLabel="Confirmation de suppression">
-                            <h2>Êtes-vous sûr de vouloir supprimer ce client ?</h2>
-                            <button className='oui' onClick={() => { handleDeleteClient(client.id); setIsOpen(false); }}>Oui</button>
-                            <button className='non' onClick={() => setIsOpen(false)}>Non</button>
-                        </Modal> 
                     </tr>
                     
                 ))}
                 </tbody>
-        </table>
 
+        </table>
+            {/* Modal de confirmation de suppression} */}
+                    <Modal className="modal-content" isOpen={isOpen} onRequestClose={() => setIsOpen(false)} contentLabel="Confirmation de suppression">
+                            <h2>Êtes-vous sûr de vouloir supprimer ce client ?</h2>
+                            <button className='oui' onClick={() => { handleDeleteClient(selectedClient); setIsOpen(false); }}>Oui</button>
+                            <button className='non' onClick={() => setIsOpen(false)}>Non</button>
+                    </Modal> 
  
     </>
   )

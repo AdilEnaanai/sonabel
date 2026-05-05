@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import ListeClients from './ListeClients'
 import FormClient from './FormClient'
 import '../styles/Client.css'
+import { addClient, getClients, deleteClient } from '../services/ClientService'
 function Client() {
     const [vue,setVue]=useState('liste')
     const [clients, setClients] = useState([])
     const [selectedClient, setSelectedClient] = useState(null);
+
+    useEffect(() => {
+      getClients().then(response => setClients(response.data))
+},[])
 
     const onCancel=()=>{
         setVue('liste')
@@ -15,14 +20,23 @@ function Client() {
 
     const onAdd=(newClient)=>{
         console.log('Client ajouté')
-        setClients((prevClients) => [...prevClients, newClient]);
+        addClient(newClient).then(data=>{
+          console.log('Client ajouté avec succès:', data.data);
+          setClients((prevClients) => [...prevClients,data.data]);
+        })
+        
         setVue('liste')
     }
 
 
     const onDelete=(id)=>{
-        console.log(`Supprimer le client avec l'id: ${id}`);
-        setClients((prevClients) => prevClients.filter(client => client.id !== id));
+        deleteClient(id).then(()=>{
+            setClients((prevClients) => prevClients.filter(client => client.id !== id));
+        }
+        ).catch(error=>{
+            console.error(`Erreur lors de la suppression du client avec l'id ${id}:`, error);
+        })
+        
     }
 
     const onUpdate=(updatingClient)=>{
